@@ -10,6 +10,19 @@ This tool replaces the bundled Git in GitHub Desktop with a small C bridge. When
 
 This results in near-instant refreshes and diffs.
 
+## Prerequisites
+Make sure you have Git and Git LFS installed **inside WSL**:
+```bash
+sudo apt install git git-lfs -y
+git lfs install
+```
+
+Confirm they're installed:
+```bash
+git --version
+git lfs version
+```
+
 ## Installation
 1. Close GitHub Desktop.
 2. Navigate to your GitHub Desktop Git folder: 
