@@ -15,12 +15,16 @@ int main(int argc, char *argv[]) {
     char win_cwd[4096];
     char wsl_cwd[4096] = "";
     if (GetCurrentDirectory(sizeof(win_cwd), win_cwd) != 0) {
-        char *wsl_ptr = strstr(win_cwd, "\\\\wsl.localhost\\Ubuntu");
-        if (!wsl_ptr) wsl_ptr = strstr(win_cwd, "\\\\wsl$\\Ubuntu");
+        char *wsl_ptr = strstr(win_cwd, "\\\\wsl.localhost\\");
+        if (!wsl_ptr) wsl_ptr = strstr(win_cwd, "\\\\wsl$\\");
         
         if (wsl_ptr) {
-            strcpy(wsl_cwd, wsl_ptr + (strstr(win_cwd, "wsl.localhost") ? 22 : 13));
-            for (int i = 0; wsl_cwd[i]; i++) if (wsl_cwd[i] == '\\') wsl_cwd[i] = '/';
+            char *start = wsl_ptr + (strstr(win_cwd, "wsl.localhost") ? 16 : 7);
+            char *slash = strchr(start, '\\');
+            if (slash) {
+                strcpy(wsl_cwd, slash);
+                for (int i = 0; wsl_cwd[i]; i++) if (wsl_cwd[i] == '\\') wsl_cwd[i] = '/';
+            }
         }
     }
 
